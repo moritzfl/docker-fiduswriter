@@ -3,6 +3,8 @@ EXPOSE 8000:8000
 ENV VERSION 3.1.0
 ENV EXECUTING_USER fiduswriter
 
+COPY start-fiduswriter.sh /etc/start-fiduswriter.sh
+
 RUN groupadd --system ${EXECUTING_USER} && useradd --system --create-home --gid ${EXECUTING_USER}  ${EXECUTING_USER} 
 
 RUN apt-get update
@@ -17,11 +19,10 @@ RUN mv fiduswriter-${VERSION} /fiduswriter
 WORKDIR "fiduswriter"
 RUN mkdir static-libs
 
-# Store relevant data in /data for persistence
 RUN cp configuration.py-default configuration.py
 
 # Add access for the executing user
-RUN chown -R ${EXECUTING_USER}:${EXECUTING_USER} /data
+RUN chmod -R 777 /data
 RUN chown -R ${EXECUTING_USER}:${EXECUTING_USER} /fiduswriter
 
 #Switch to executing user
@@ -33,4 +34,4 @@ RUN /bin/bash -c "source venv/bin/activate"
 RUN pip install -r requirements.txt
 
 RUN python manage.py init
-CMD python manage.py runserver
+CMD sh "/etc/start-fiduswriter.sh" 
