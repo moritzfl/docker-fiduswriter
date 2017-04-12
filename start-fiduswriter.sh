@@ -35,8 +35,10 @@ if [ -f /data/configuration.py ]
 fi
 ln -sf /data/configuration.py /fiduswriter/configuration.py
 
+chmod -R 777 /data
 echo '*** Starting server ...'
 
+su fiduswriter
 cd /fiduswriter
 python manage.py runserver
 
