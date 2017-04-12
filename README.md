@@ -1,5 +1,7 @@
 # docker-fiduswriter
 
+> This is still in development and might or might not work!! No guarantee on anything ;)
+
 [FidusWriter](https://www.fiduswriter.org/how-it-works/) is a collaborative online writing tool. This is a docker image following the official installation manual as closely as possible.
 
 To run use: 
