@@ -10,27 +10,30 @@ RUN apt-get install -y wget unzip libjpeg-dev python-dev python-virtualenv gette
 RUN mkdir /data
 RUN mkdir /data/media
 
-
+# Download fiduswriter release from github
 RUN wget -O fiduswriter.zip https://github.com/fiduswriter/fiduswriter/archive/${VERSION}.zip
 RUN unzip fiduswriter.zip
 RUN mv fiduswriter-${VERSION} /fiduswriter
 
 WORKDIR "fiduswriter"
 RUN mkdir static-libs
+
+# Store relevant data in /data for persistence
 RUN cp configuration.py-default /data/configuration.py
 RUN ln -s /data/configuration.py /fiduswriter/configuration.py
 RUN ln -s /data/fiduswriter.sql /fiduswriter/fiduswriter.sql
 RUN ln -s /data/media /fiduswriter/media
-RUN chown -R ${EXECUTING_USER}:${EXECUTING_USER}  /data
+
+# Add access for the executing user
+RUN chown -R ${EXECUTING_USER}:${EXECUTING_USER} /data
 RUN chown -R ${EXECUTING_USER}:${EXECUTING_USER} /fiduswriter
 
-# Switch from root to other user to prevent problems with npm
+#Switch to executing user
 USER ${EXECUTING_USER} 
 
 RUN virtualenv venv
 RUN /bin/bash -c "source venv/bin/activate"
 
-RUN ls
 RUN pip install -r requirements.txt
 
 RUN python manage.py init
