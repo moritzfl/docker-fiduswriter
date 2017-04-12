@@ -8,7 +8,6 @@ RUN groupadd --system ${EXECUTING_USER} && useradd --system --create-home --gid 
 RUN apt-get update
 RUN apt-get install -y wget unzip libjpeg-dev python-dev python-virtualenv gettext zlib1g-dev git npm nodejs nodejs-legacy python-pip
 RUN mkdir /data
-RUN mkdir /data/media
 
 # Download fiduswriter release from github
 RUN wget -O fiduswriter.zip https://github.com/fiduswriter/fiduswriter/archive/${VERSION}.zip
@@ -19,10 +18,7 @@ WORKDIR "fiduswriter"
 RUN mkdir static-libs
 
 # Store relevant data in /data for persistence
-RUN cp configuration.py-default /data/configuration.py
-RUN ln -s /data/configuration.py /fiduswriter/configuration.py
-RUN ln -s /data/fiduswriter.sql /fiduswriter/fiduswriter.sql
-RUN ln -s /data/media /fiduswriter/media
+RUN cp configuration.py-default configuration.py
 
 # Add access for the executing user
 RUN chown -R ${EXECUTING_USER}:${EXECUTING_USER} /data
