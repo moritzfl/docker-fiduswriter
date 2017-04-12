@@ -1,11 +1,11 @@
 FROM ubuntu:16.04
 EXPOSE 8000:8000
 ENV VERSION 3.1.0
-ENV EXECUTING_USER fiduswriter
+ENV JAVASCRIPT_USER fiduswriter
 
 COPY start-fiduswriter.sh /etc/start-fiduswriter.sh
 
-RUN groupadd --system ${EXECUTING_USER} && useradd --system --create-home --gid ${EXECUTING_USER}  ${EXECUTING_USER} 
+RUN groupadd --system ${JAVASCRIPT_USER} && useradd --system --create-home --gid ${JAVASCRIPT_USER}  ${JAVASCRIPT_USER} 
 
 RUN apt-get update
 RUN apt-get install -y wget unzip libjpeg-dev python-dev python-virtualenv gettext zlib1g-dev git npm nodejs nodejs-legacy python-pip
@@ -23,10 +23,10 @@ RUN cp configuration.py-default configuration.py
 
 # Add access for the executing user
 RUN chmod -R 777 /data
-RUN chown -R ${EXECUTING_USER}:${EXECUTING_USER} /fiduswriter
+RUN chown -R ${JAVASCRIPT_USER}:${JAVASCRIPT_USER} /fiduswriter
 
-#Switch to executing user
-USER ${EXECUTING_USER} 
+#Switch to javascript user to prevent npm problems
+USER ${JAVASCRIPT_USER} 
 
 RUN virtualenv venv
 RUN /bin/bash -c "source venv/bin/activate"
@@ -34,4 +34,6 @@ RUN /bin/bash -c "source venv/bin/activate"
 RUN pip install -r requirements.txt
 
 RUN python manage.py init
+
+USER "root" 
 CMD sh "/etc/start-fiduswriter.sh" 
