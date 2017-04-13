@@ -4,7 +4,7 @@
 
 [FidusWriter](https://www.fiduswriter.org/how-it-works/) is a collaborative online writing tool. This is a docker image following the official installation manual as closely as possible.
 
-The docker container should technically work but does not offer persistent data storage via the /data-directory yet.
+You will need to modify the entries for ALLOWED_HOSTS in the file /data/configuration.py in order to allow access from any other URL than localhost.
 
 To run use: 
 ~~~~
