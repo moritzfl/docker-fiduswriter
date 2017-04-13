@@ -19,7 +19,7 @@ RUN mkdir static-libs
 RUN cp configuration.py-default configuration.py
 
 # Add access to /data and /fiduswriter-directories for the executing user
-RUN mkdir /data
+RUN mkdir -p /data
 RUN chmod -R 755 /data
 VOLUME ["/data"]
 RUN chmod -R 755 /data
