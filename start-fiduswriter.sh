@@ -2,6 +2,8 @@
 #
 # Script used to setup and run fiduswriter
 
+echo "*** Running as user $(whoami) ..."
+
 # Handle fiduswriter.sql
 if [ -f /data/fiduswriter.sql ]
   # if fiduswriter.sql exists in the data directory remove the default version originally
@@ -63,8 +65,6 @@ if [ -f /data/configuration.py ]
     fi
 fi
 ln -sf /data/configuration.py /fiduswriter/configuration.py
-
-
 
 echo '*** Starting server ...'
 cd /fiduswriter
