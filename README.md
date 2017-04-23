@@ -14,7 +14,7 @@ You will need to modify the entries for ALLOWED_HOSTS in the file /data/configur
 
 Until you define a mail-server (also through /data/configuration.py), the mails and contained __links required for user registration__ get printed to the __outputstream of the container__.
 
-In order to persist data, you __must grant write access for the executing user__ to the directory on the host. This can be achieved by issuing the command below. If you do not ensure access to the desired directory on the host, the fiduswriter will fail to start.
+In order to persist data, you __must grant write access for the executing user__ to the directory on the host. This can be achieved by issuing the command below. If you do not ensure access to the desired directory on the host, fiduswriter will not run correctly.
 ~~~~
 $ sudo chmod -R 777 /host/directory
 ~~~~
