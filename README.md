@@ -12,7 +12,7 @@ VERSION -> Fiduswriter version.
 
 You will need to modify the entries for ALLOWED_HOSTS in the file /data/configuration.py in order to allow __access__ from any __URL other than localhost__. I would recommend mapping the data directory to a directory on your host machine for data persistence and easy configuration (follow the instrucions below).
 
-Until you define a mail-server, the mails and contained __links required for user registration__ get printed to the __outputstream of the container__.
+Until you define a mail-server (also through /data/configuration.py), the mails and contained __links required for user registration__ get printed to the __outputstream of the container__.
 
 In order to persist data, you __must grant write access for the executing user__ to the directory on the host. This can be achieved by calling. If you do not ensure access to the desired directory on the host, the fiduswriter will fail to start.:
 ~~~~
