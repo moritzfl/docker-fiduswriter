@@ -1,6 +1,6 @@
 #!/bin/sh -e
 #
-# Script used to setup and run fiduswriter
+# Script to allow for data-persistence in the /data-directory and run fiduswriter
 
 echo "*** Running as user $(whoami) ..."
 
