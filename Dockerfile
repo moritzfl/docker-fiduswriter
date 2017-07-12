@@ -27,6 +27,7 @@ USER ${EXECUTING_USER}
 RUN virtualenv venv
 RUN /bin/bash -c "source venv/bin/activate"
 
+RUN /fiduswriter/venv/bin/pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 RUN python manage.py init
