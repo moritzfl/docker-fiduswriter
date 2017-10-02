@@ -2,6 +2,9 @@
 
 > Has been successfully tested on macOS and Linux. If you encounter any problems, please report them
 
+![automated](https://img.shields.io/docker/automated/moritzf/fiduswriter.svg)
+![pulls](https://img.shields.io/docker/pulls/moritzf/fiduswriter.svg)
+
 [FidusWriter](https://www.fiduswriter.org/how-it-works/) is a collaborative online writing tool. This is a docker image following the official installation manual as closely as possible.
 
 You will need to modify the entries for ALLOWED_HOSTS in the file /data/configuration.py in order to allow __access__ from any __URL other than localhost__. I would recommend mapping the data directory to a directory on your host machine for data persistence and easy configuration (follow the instrucions below).
