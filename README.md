@@ -3,6 +3,7 @@
 > Has been successfully tested on macOS and Linux. If you encounter any problems, please report them
 
 ![automated](https://img.shields.io/docker/automated/moritzf/fiduswriter.svg)
+![build](https://img.shields.io/docker/build/moritzf/fiduswriter.svg)
 ![pulls](https://img.shields.io/docker/pulls/moritzf/fiduswriter.svg)
 
 [FidusWriter](https://www.fiduswriter.org/how-it-works/) is a collaborative online writing tool. This is a docker image following the official installation manual as closely as possible.
