@@ -8,14 +8,18 @@
 
 [FidusWriter](https://www.fiduswriter.org/how-it-works/) is a collaborative online writing tool. This is a docker image that was built following the official installation manual as closely as possible.
 
-Builds on Docker are tagged following this pattern and are triggered automatically through changes in [this project (moritzfl/docker-fiduswriter)](https://github.com/moritzfl/docker-fiduswriter) ("latest" ist triggered by commits, the others - including "latest-stable" - through releases):
-- __latest__: version built with the most current commit on this repository (usually this results in latest being an equivalent to the latest release or prerelease)
+## Builds and Tags on DockerHub
 
-- __latest-stable__: version representing the latest stable release of fiduswriter
+Builds on Docker are tagged following this pattern and are triggered automatically through changes in [this project (moritzfl/docker-fiduswriter)](https://github.com/moritzfl/docker-fiduswriter) ("latest" ist triggered by commits, the others - including "latest-stable" - through releases):
+- __latest__: version built with the most current commit on this repository (usually this results in latest being an equivalent to the most current "release-\[VERSION\]" or "prerelease-\[VERSION\]")
+
+- __latest-stable__: version representing the latest stable release of fiduswriter (equivalent to most current "release-\[VERSION\]")
 
 - __release-\[VERSION\]__: a stable release of fiduswriter (equivalent to "release" on fiduswriter-repo)
 
 - __prerelease-\[VERSION\]__: a potentially unstable version of fiduswriter (equivalent to "prerelease" on fiduswriter-repo) 
+
+## How to use this image
 
 You will need to modify the entries for ALLOWED_HOSTS in the file /data/configuration.py in order to allow __access__ from any __URL other than localhost__. I would recommend mapping the data directory to a directory on your host machine for data persistence and easy configuration (follow the instrucions below).
 
