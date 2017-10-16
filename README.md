@@ -8,6 +8,12 @@
 
 [FidusWriter](https://www.fiduswriter.org/how-it-works/) is a collaborative online writing tool. This is a docker image following the official installation manual as closely as possible.
 
+Builds on Docker are tagged following this pattern and are triggered automatically through changes in this repository (moritzfl/docker-fiduswriter):
+- latest: version built with the most current commit on this repository </br> *triggered by commit*
+- latest-stable: version representing the latest stable release of fiduswriter</br> *triggered by release*
+- release-\[VERSION\]: a stable release of fiduswriter (non-prerelease on fiduswriter-repo) </br> *triggered by release*
+- prerelease-\[VERSION\]: a potentially unstable version of fiduswriter (prerelease on fiduswriter-repo) </br> *triggered by release*
+
 You will need to modify the entries for ALLOWED_HOSTS in the file /data/configuration.py in order to allow __access__ from any __URL other than localhost__. I would recommend mapping the data directory to a directory on your host machine for data persistence and easy configuration (follow the instrucions below).
 
 Until you define a mail-server (also through /data/configuration.py), the mails and contained __links required for user registration__ get printed to the __outputstream of the container__.
