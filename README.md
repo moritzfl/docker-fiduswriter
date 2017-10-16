@@ -9,7 +9,7 @@
 [FidusWriter](https://www.fiduswriter.org/how-it-works/) is a collaborative online writing tool. This is a docker image that was built following the official installation manual as closely as possible.
 
 Builds on Docker are tagged following this pattern and are triggered automatically through changes in [this project (moritzfl/docker-fiduswriter)](https://github.com/moritzfl/docker-fiduswriter) ("latest" ist triggered by commits, the others - including "latest-stable" - through releases):
-- __latest__: version built with the most current commit on this repository 
+- __latest__: version built with the most current commit on this repository (usually this results in latest being an equivalent to the latest release or prerelease)
 
 - __latest-stable__: version representing the latest stable release of fiduswriter
 
