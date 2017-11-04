@@ -73,4 +73,7 @@ RUN pip install -r requirements.txt
 RUN python manage.py init
 
 COPY start-fiduswriter.sh /etc/start-fiduswriter.sh
-CMD sh "/etc/start-fiduswriter.sh"
+
+# Always use the array form for exec, see
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#cmd
+CMD ["/bin/sh", "/etc/start-fiduswriter.sh"]
