@@ -1,3 +1,4 @@
+# vim: set ts=4 sw=4 sts=0 sta et :
 FROM ubuntu:16.04
 EXPOSE 8000:8000
 ENV VERSION 3.3.5
