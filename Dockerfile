@@ -57,12 +57,10 @@ RUN wget \
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#workdir
 WORKDIR /fiduswriter
 
-RUN mkdir static-libs
-RUN cp configuration.py-default configuration.py
+RUN mkdir static-libs && \
+    cp configuration.py-default configuration.py
 
-
-RUN chmod -R 777 /data
-RUN chmod -R 777 /fiduswriter
+RUN chmod -R 777 /data /fiduswriter
 
 USER ${EXECUTING_USER}
 
