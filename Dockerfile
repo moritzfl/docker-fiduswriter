@@ -30,18 +30,18 @@ RUN groupadd \
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#apt-get
 RUN apt-get update \
     && apt-get install -y \
-        wget \
-        unzip \
-        libjpeg-dev \
-        python-dev \
-        python-virtualenv \
         gettext \
-        zlib1g-dev \
         git \
-        npm \
+        libjpeg-dev \
         nodejs \
         nodejs-legacy \
+        npm \
+        python-dev \
         python-pip \
+        python-virtualenv \
+        unzip \
+        wget \
+        zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Download fiduswriter release from github
