@@ -25,8 +25,24 @@ RUN groupadd \
         --gid ${EXECUTING_USER} \
         ${EXECUTING_USER}
 
-RUN apt-get update
-RUN apt-get install -y wget unzip libjpeg-dev python-dev python-virtualenv gettext zlib1g-dev git npm nodejs nodejs-legacy python-pip
+# Chain apt-get update, apt-get install and the removal of the lists.
+# This is one of the best practices of Docker, see
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#apt-get
+RUN apt-get update \
+    && apt-get install -y \
+        wget \
+        unzip \
+        libjpeg-dev \
+        python-dev \
+        python-virtualenv \
+        gettext \
+        zlib1g-dev \
+        git \
+        npm \
+        nodejs \
+        nodejs-legacy \
+        python-pip \
+    && rm -rf /var/lib/apt/lists/*
 
 # Download fiduswriter release from github
 RUN wget -O fiduswriter.zip https://github.com/fiduswriter/fiduswriter/archive/${VERSION}.zip
