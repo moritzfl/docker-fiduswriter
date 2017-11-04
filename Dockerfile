@@ -45,9 +45,13 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Download fiduswriter release from github
-RUN wget -O fiduswriter.zip https://github.com/fiduswriter/fiduswriter/archive/${VERSION}.zip
-RUN unzip fiduswriter.zip
-RUN mv fiduswriter-${VERSION} /fiduswriter
+# Run the unzipping, moving and removal of zip file in the same layer.
+RUN wget \
+    --output-document=fiduswriter.zip \
+    https://github.com/fiduswriter/fiduswriter/archive/${VERSION}.zip \
+    && unzip fiduswriter.zip \
+    && mv fiduswriter-${VERSION} /fiduswriter \
+    && rm fiduswriter.zip
 
 WORKDIR "fiduswriter"
 RUN mkdir static-libs
