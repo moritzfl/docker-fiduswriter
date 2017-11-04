@@ -1,10 +1,29 @@
 FROM ubuntu:16.04
 EXPOSE 8000:8000
 ENV VERSION 3.3.5
+
+# Executing group, with fixed group id
+ENV EXECUTING_GROUP fiduswriter
+ENV EXECUTING_GROUP_ID 999
+
+# Executing user, with fixed user id
 ENV EXECUTING_USER fiduswriter
+ENV EXECUTING_USER_ID 999
+
 VOLUME ["/data"]
 
-RUN groupadd --system ${EXECUTING_USER} && useradd --system --create-home --gid ${EXECUTING_USER}  ${EXECUTING_USER} 
+# Create user and group with fixed ID, instead of allowing the OS to pick one.
+RUN groupadd \
+        --system \
+        --gid ${EXECUTING_GROUP_ID} \
+        ${EXECUTING_GROUP} \
+    && useradd \
+        --system \
+        --create-home \
+         --no-log-init \
+        --uid ${EXECUTING_USER_ID} \
+        --gid ${EXECUTING_USER} \
+        ${EXECUTING_USER}
 
 RUN apt-get update
 RUN apt-get install -y wget unzip libjpeg-dev python-dev python-virtualenv gettext zlib1g-dev git npm nodejs nodejs-legacy python-pip
