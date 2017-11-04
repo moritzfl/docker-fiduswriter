@@ -10,6 +10,9 @@ ENV EXECUTING_GROUP_ID 999
 ENV EXECUTING_USER fiduswriter
 ENV EXECUTING_USER_ID 999
 
+# Data volume, should be owned by 999:999 to ensure the application can
+# function correctly. Run `chown 999:999 <data-dir-path>` on the host OS to
+# get this right.
 VOLUME ["/data"]
 
 # Create user and group with fixed ID, instead of allowing the OS to pick one.

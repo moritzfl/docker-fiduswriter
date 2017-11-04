@@ -27,9 +27,7 @@ Until you define a mail-server (also through /data/configuration.py), the mails 
 
 In order to persist data, you __must grant write access for the executing user (fiduswriter)__ to the data directory that you want to map to on the host. This can be achieved by issuing the command below. If you do not ensure access to the desired directory on the host, fiduswriter will not run correctly.
 ~~~~
-$ sudo chmod -R 777 /host/directory
-
-or alternatively do proper user management instead of using the hammer ;)
+$ sudo chown -R 999:999 /host/directory
 ~~~~
 (Replace "/host/directory" with a valid directory on your host machine)
 
