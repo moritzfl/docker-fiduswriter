@@ -53,7 +53,10 @@ RUN wget \
     && mv fiduswriter-${VERSION} /fiduswriter \
     && rm fiduswriter.zip
 
-WORKDIR "fiduswriter"
+# Working directories should be absolute.
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#workdir
+WORKDIR /fiduswriter
+
 RUN mkdir static-libs
 RUN cp configuration.py-default configuration.py
 
