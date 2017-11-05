@@ -10,14 +10,17 @@
 
 ## Builds and Tags on DockerHub
 
-Builds on Docker are tagged following this pattern and are triggered automatically through changes in [this project (moritzfl/docker-fiduswriter)](https://github.com/moritzfl/docker-fiduswriter) ("latest" ist triggered by commits, the others - including "latest-stable" - through releases):
-- __latest__: version built with the most current commit on this repository (usually this results in latest being an equivalent to the most current "release-\[VERSION\]" or "prerelease-\[VERSION\]")
+Builds on Docker are tagged following this pattern and are triggered automatically through changes in [this project (moritzfl/docker-fiduswriter)](https://github.com/moritzfl/docker-fiduswriter) ("develop" ist triggered by commits, the others through releases):
 
-- __latest-stable__: version representing the latest stable release of fiduswriter (equivalent to most current "release-\[VERSION\]")
+- __latest__: latest release or prerelease of fiduswriter (most current "release-\[VERSION\]" or "prerelease-\[VERSION\]")
+
+- __latest-stable__: version representing the latest stable release of fiduswriter (most current "release-\[VERSION\]")
 
 - __release-\[VERSION\]__: a stable release of fiduswriter (equivalent to "release" on fiduswriter-repo)
 
 - __prerelease-\[VERSION\]__: a potentially unstable version of fiduswriter (equivalent to "prerelease" on fiduswriter-repo) 
+
+- __develop__: a development build is done after each commit
 
 ## How to use this image
 
