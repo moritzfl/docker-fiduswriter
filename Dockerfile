@@ -1,26 +1,70 @@
+# vim: set ts=4 sw=4 sts=0 sta et :
 FROM ubuntu:16.04
 EXPOSE 8000:8000
 ENV VERSION 3.3.5
+
+# Executing group, with fixed group id
+ENV EXECUTING_GROUP fiduswriter
+ENV EXECUTING_GROUP_ID 999
+
+# Executing user, with fixed user id
 ENV EXECUTING_USER fiduswriter
+ENV EXECUTING_USER_ID 999
+
+# Data volume, should be owned by 999:999 to ensure the application can
+# function correctly. Run `chown 999:999 <data-dir-path>` on the host OS to
+# get this right.
 VOLUME ["/data"]
 
-RUN groupadd --system ${EXECUTING_USER} && useradd --system --create-home --gid ${EXECUTING_USER}  ${EXECUTING_USER} 
+# Create user and group with fixed ID, instead of allowing the OS to pick one.
+RUN groupadd \
+        --system \
+        --gid ${EXECUTING_GROUP_ID} \
+        ${EXECUTING_GROUP} \
+    && useradd \
+        --system \
+        --create-home \
+         --no-log-init \
+        --uid ${EXECUTING_USER_ID} \
+        --gid ${EXECUTING_USER} \
+        ${EXECUTING_USER}
 
-RUN apt-get update
-RUN apt-get install -y wget unzip libjpeg-dev python-dev python-virtualenv gettext zlib1g-dev git npm nodejs nodejs-legacy python-pip
+# Chain apt-get update, apt-get install and the removal of the lists.
+# This is one of the best practices of Docker, see
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#apt-get
+RUN apt-get update \
+    && apt-get install -y \
+        gettext \
+        git \
+        libjpeg-dev \
+        nodejs \
+        nodejs-legacy \
+        npm \
+        python-dev \
+        python-pip \
+        python-virtualenv \
+        unzip \
+        wget \
+        zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Download fiduswriter release from github
-RUN wget -O fiduswriter.zip https://github.com/fiduswriter/fiduswriter/archive/${VERSION}.zip
-RUN unzip fiduswriter.zip
-RUN mv fiduswriter-${VERSION} /fiduswriter
+# Run the unzipping, moving and removal of zip file in the same layer.
+RUN wget \
+    --output-document=fiduswriter.zip \
+    https://github.com/fiduswriter/fiduswriter/archive/${VERSION}.zip \
+    && unzip fiduswriter.zip \
+    && mv fiduswriter-${VERSION} /fiduswriter \
+    && rm fiduswriter.zip
 
-WORKDIR "fiduswriter"
-RUN mkdir static-libs
-RUN cp configuration.py-default configuration.py
+# Working directories should be absolute.
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#workdir
+WORKDIR /fiduswriter
 
+RUN mkdir static-libs && \
+    cp configuration.py-default configuration.py
 
-RUN chmod -R 777 /data
-RUN chmod -R 777 /fiduswriter
+RUN chmod -R 777 /data /fiduswriter
 
 USER ${EXECUTING_USER}
 
@@ -33,4 +77,7 @@ RUN pip install -r requirements.txt
 RUN python manage.py init
 
 COPY start-fiduswriter.sh /etc/start-fiduswriter.sh
-CMD sh "/etc/start-fiduswriter.sh"
+
+# Always use the array form for exec, see
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#cmd
+CMD ["/bin/sh", "/etc/start-fiduswriter.sh"]
