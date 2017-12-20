@@ -2,9 +2,9 @@
 
 > Has been successfully tested on macOS and Linux. If you encounter any problems, please report them
 
-![automated](https://img.shields.io/docker/automated/moritzf/fiduswriter.svg)
-![build](https://img.shields.io/docker/build/moritzf/fiduswriter.svg)
-![pulls](https://img.shields.io/docker/pulls/moritzf/fiduswriter.svg)
+[![automated](https://img.shields.io/docker/automated/moritzf/fiduswriter.svg)](https://hub.docker.com/r/moritzf/fiduswriter/)
+[![build](https://img.shields.io/docker/build/moritzf/fiduswriter.svg)](https://hub.docker.com/r/moritzf/fiduswriter/)
+[![pulls](https://img.shields.io/docker/pulls/moritzf/fiduswriter.svg)](https://hub.docker.com/r/moritzf/fiduswriter/)
 
 [FidusWriter](https://github.com/fiduswriter/fiduswriter) is a collaborative online writing tool. This is a docker image that was built following the official installation manual as closely as possible.
 
