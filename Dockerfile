@@ -1,7 +1,7 @@
 # vim: set ts=4 sw=4 sts=0 sta et :
 FROM ubuntu:16.04
 EXPOSE 8000:8000
-ENV VERSION 3.3.8
+ENV VERSION 3.3.9
 
 # Executing group, with fixed group id
 ENV EXECUTING_GROUP fiduswriter
