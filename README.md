@@ -1,7 +1,5 @@
 # docker-fiduswriter
 
-> Has been successfully tested on macOS and Linux. If you encounter any problems, please report them
-
 [![automated](https://img.shields.io/docker/automated/moritzf/fiduswriter.svg)](https://hub.docker.com/r/moritzf/fiduswriter/)
 [![build](https://img.shields.io/docker/build/moritzf/fiduswriter.svg)](https://hub.docker.com/r/moritzf/fiduswriter/)
 [![pulls](https://img.shields.io/docker/pulls/moritzf/fiduswriter.svg)](https://hub.docker.com/r/moritzf/fiduswriter/)
