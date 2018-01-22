@@ -4,7 +4,7 @@
 [![build](https://img.shields.io/docker/build/moritzf/fiduswriter.svg)](https://hub.docker.com/r/moritzf/fiduswriter/)
 [![pulls](https://img.shields.io/docker/pulls/moritzf/fiduswriter.svg)](https://hub.docker.com/r/moritzf/fiduswriter/)
 
-[FidusWriter](https://github.com/fiduswriter/fiduswriter) is a collaborative online writing tool. This is a docker image that was built following the official installation manual as closely as possible.
+[FidusWriter](https://github.com/fiduswriter/fiduswriter) is a collaborative online writing tool. This is a docker image that was built following the official installation manual for Ubuntu as closely as possible.
 
 ## Builds and Tags on DockerHub
 
