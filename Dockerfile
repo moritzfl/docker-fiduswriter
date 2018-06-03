@@ -1,5 +1,5 @@
 # vim: set ts=4 sw=4 sts=0 sta et :
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 EXPOSE 8000:8000
 ENV VERSION 3.4.4
 
@@ -29,20 +29,21 @@ RUN groupadd \
         --gid ${EXECUTING_USER} \
         ${EXECUTING_USER}
 
+
 # Chain apt-get update, apt-get install and the removal of the lists.
 # This is one of the best practices of Docker, see
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#apt-get
 RUN apt-get update \
     && apt-get install -y \
+        build-essential \
         gettext \
         git \
         libjpeg-dev \
         nodejs \
-        nodejs-legacy \
         npm \
-        python-dev \
-        python-pip \
-        python-virtualenv \
+        python3-venv \
+        python3-dev \
+        python3-pip \
         unzip \
         wget \
         zlib1g-dev \
@@ -68,7 +69,7 @@ RUN chmod -R 777 /data /fiduswriter
 
 USER ${EXECUTING_USER}
 
-RUN virtualenv venv
+RUN python3 -m venv venv
 RUN /bin/bash -c "source venv/bin/activate"
 
 RUN /fiduswriter/venv/bin/pip install --upgrade pip
