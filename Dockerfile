@@ -72,10 +72,9 @@ USER ${EXECUTING_USER}
 RUN python3 -m venv venv
 RUN /bin/bash -c "source venv/bin/activate"
 
-RUN /fiduswriter/venv/bin/pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
-RUN python manage.py init
+RUN python3 manage.py init
 
 COPY start-fiduswriter.sh /etc/start-fiduswriter.sh
 

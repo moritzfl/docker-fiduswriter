@@ -68,6 +68,6 @@ ln -sf /data/configuration.py /fiduswriter/configuration.py
 
 echo '*** Starting server ...'
 cd /fiduswriter
-python manage.py runserver
+python3 manage.py runserver
 
 exit 0
