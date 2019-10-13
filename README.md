@@ -40,5 +40,5 @@ $ docker run -d -v /host/directory:/data -p 8000:8000 --name moritzf-fiduswriter
 
 If needed, you can create an administrative account for fiduswriter by attaching the container to your terminal and issuing the following command:
 ~~~~
-$ python3 ./manage.py createsuperuser
+$ python3 manage.py createsuperuser
 ~~~~
