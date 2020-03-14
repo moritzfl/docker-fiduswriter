@@ -28,7 +28,7 @@ fi
 if [ -d /fiduswriter/media ] ; then
   if ! [ -L /fiduswriter/media ] ; then
 	if [ -d /data/media ] ; then
-		rm /fiduswriter/media
+		rm -rf /fiduswriter/media
 	else
 	    mv /fiduswriter/media /data/media
 	fi
