@@ -1,7 +1,7 @@
 # vim: set ts=4 sw=4 sts=0 sta et :
 FROM ubuntu:18.04
 EXPOSE 8000:8000
-ENV VERSION 3.7.2
+ENV VERSION 3.8.4
 
 # Executing group, with fixed group id
 ENV EXECUTING_GROUP fiduswriter
@@ -39,7 +39,6 @@ RUN apt-get update \
         gettext \
         git \
         libjpeg-dev \
-        nodejs \
         npm \
         python3-venv \
         python3-dev \
@@ -47,34 +46,23 @@ RUN apt-get update \
         unzip \
         wget \
         zlib1g-dev \
+        curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Download fiduswriter release from github
-# Run the unzipping, moving and removal of zip file in the same layer.
-RUN wget \
-    --output-document=fiduswriter.zip \
-    https://github.com/fiduswriter/fiduswriter/archive/${VERSION}.zip \
-    && unzip fiduswriter.zip \
-    && mv fiduswriter-${VERSION} /fiduswriter \
-    && rm fiduswriter.zip
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install --upgrade setuptools
+RUN pip3 install fiduswriter==${VERSION}
+RUN pip3 install --upgrade pip wheel
 
 # Working directories should be absolute.
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#workdir
 WORKDIR /fiduswriter
-
-RUN mkdir static-libs && \
-    cp configuration.py-default configuration.py
-
-RUN chmod -R 777 /data /fiduswriter
-
-USER ${EXECUTING_USER}
+RUN chmod -R 777 /fiduswriter /data
 
 RUN python3 -m venv venv
-RUN /bin/bash -c "source venv/bin/activate"
-
-RUN pip3 install -r requirements.txt
-
-RUN python3 manage.py init
+RUN /bin/bash -c "source /fiduswriter/venv/bin/activate"
 
 COPY start-fiduswriter.sh /etc/start-fiduswriter.sh
 
