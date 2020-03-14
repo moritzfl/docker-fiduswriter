@@ -4,7 +4,7 @@
 
 echo "*** Running as user $(whoami) ..."
 
-if [ -f /data/configuration.py && -f /data/fiduswriter.sql ]; then
+if [ -f /data/configuration.py ]; then
     echo '*** Fiduswriter will use the settings found in /data/configuration.py ...'
 else
     echo '*** /data/configuration.py was not found. A new file with default settings will now be created ...'
