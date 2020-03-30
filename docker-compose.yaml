@@ -1,0 +1,20 @@
+version: '2'
+services:
+  app:
+    #image: moritzf/fiduswriter:latest
+    build: .
+    ports: ["::1:8000:8000"]
+    env_file: ["./env/fiduswriter.env"]
+    volumes: ["./data/fiduswriter:/data"]
+    networks:
+      - data
+#      - web
+  postgres:
+    image: postgres:12-alpine
+    volumes: ["./data/postgres:/var/lib/postgresql/data"]
+    env_file: ["./env/postgres.env"]
+    networks: ["data"]
+networks:
+  data:
+#  web:
+#    external: true
