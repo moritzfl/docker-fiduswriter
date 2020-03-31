@@ -9,6 +9,8 @@ services:
     networks:
       - data
       - web
+    depends_on:
+      - postgres
     labels:
       - traefik.enable=true
       - traefik.backend=example
