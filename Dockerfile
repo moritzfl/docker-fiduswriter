@@ -1,7 +1,7 @@
 # vim: set ts=4 sw=4 sts=0 sta et :
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 EXPOSE 8000
-ENV VERSION 3.9.2
+ENV VERSION 3.9.19
 
 # Executing group, with fixed group id
 ENV EXECUTING_GROUP fiduswriter
@@ -32,13 +32,18 @@ RUN groupadd \
 # Chain apt-get update, apt-get install and the removal of the lists.
 # This is one of the best practices of Docker, see
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#apt-get
-RUN apt-get update \
+RUN TZ=Europe/Berlin \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get update \
     && apt-get install -y \
         build-essential \
         gettext \
         git \
         libjpeg-dev \
         libpq-dev \
+        nodejs \
         npm \
         python3-venv \
         python3-dev \
@@ -49,13 +54,10 @@ RUN apt-get update \
         curl \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
-RUN apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
-
 RUN pip3 install --upgrade setuptools pip wheel
-RUN pip3 install psycopg2==2.8.4 dj-database-url
+RUN pip3 install dj-database-url
 
-RUN pip3 install fiduswriter[books,citation-api-import]==${VERSION}
+RUN pip3 install fiduswriter[books,citation-api-import,languagetool,ojs,phplist,github-export,postgresql]==${VERSION}
 
 RUN mkdir -p /fiduswriter && \
         chown 1000:1000 /fiduswriter && \
