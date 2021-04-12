@@ -42,3 +42,37 @@ If needed, you can create an administrative account for fiduswriter by attaching
 ~~~~
 $ python3 manage.py createsuperuser
 ~~~~
+
+## How to use this with Docker Compose
+
+This repository comes with a `docker-compose.yaml` file. It describes a `production` like environment that uses a PostgreSQL database. You can retrieve dependencies and generate the Docker image for Fidus Writer with:
+
+    docker-compose pull
+    docker-compose build
+
+This will install all build-time dependencies into the image. To configure it for the resulting container, we need to put some configuration in place.
+
+    mkdir -p /data
+    cp env/fiduswriter.env.example env/fiduswriter.env
+    cp env/postgres.env.example env/postgres.env
+    cp env/configuration.py.example data/configuration.py
+
+You will eventually only need to adapt the `*.env` files. The `configuration.py` file differs from the default configuration in so that it reads the configuration from the environment variables specified in the previous files. Please refer to the application documentation, in case these settings are not self-explanatory.
+
+Then you can launch the application with:
+
+    docker-compose up -d
+
+One last adaptation is needed after the initial run, since else the registration emails will be sent from `example.com`.
+
+First create a super user with
+
+    docker-compose exec app fiduswriter createsuperuser
+
+and then login to `/admin` to change the site configuration. The default Django site that is created during `fiduswriter setup` is called *example.com*, which will be used by `django-allauth` for email messages. Let's change this to a `production` value.
+
+This application state needs to be adapted in `/admin/sites/site/`, which is only accessible to superusers, why we created the admin account just before.
+
+Change the *domain name* to from where your instance can be reached, and the *display name* to indicate how you want it to be called. Then your Fidus Writer deployment should be complete.
+
+Please leave comments in the issues if you have any remarks.

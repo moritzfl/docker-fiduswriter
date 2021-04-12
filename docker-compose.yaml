@@ -1,0 +1,30 @@
+version: '2'
+services:
+  app:
+    #image: moritzf/fiduswriter:latest
+    build: .
+    expose: ["8000"]
+    env_file: ["./env/fiduswriter.env"]
+    volumes: ["./data/fiduswriter:/data"]
+    networks:
+      - data
+      - web
+    depends_on:
+      - postgres
+    labels:
+      - traefik.enable=true
+      - traefik.backend=example
+      - traefik.frontend.rule=Host:example.com
+      - traefik.frontend.passHostHeader=true
+      - traefik.frontend.redirect.entryPoint=https
+      - traefik.docker.network=web
+      - traefik.port=8000
+  postgres:
+    image: postgres:12-alpine
+    volumes: ["./data/postgres:/var/lib/postgresql/data"]
+    env_file: ["./env/postgres.env"]
+    networks: ["data"]
+networks:
+  data:
+  web:
+    external: true

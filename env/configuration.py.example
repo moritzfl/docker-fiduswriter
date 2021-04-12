@@ -1,0 +1,96 @@
+import os
+import dj_database_url
+
+#############################################
+# Django settings for Fidus Writer project. #
+#############################################
+
+# After copying this file to configuration.py, adjust the below settings to
+# work with your setup.
+
+# If you don't want to show debug messages, set DEBUG to False.
+
+DEBUG = int(os.environ.get('DEBUG', default=0))
+# SOURCE_MAPS - allows any value used by webpack devtool
+# https://webpack.js.org/configuration/devtool/
+# For example
+# SOURCE_MAPS = 'cheap-module-source-map' # fast - line numbers only
+# SOURCE_MAPS = 'source-map' # slow - line and column number
+SOURCE_MAPS = False 
+
+PROJECT_PATH = os.environ.get('PROJECT_PATH')
+# SRC_PATH is the root path of the FW sources.
+SRC_PATH = os.environ.get('SRC_PATH')
+
+# Migrate, transpile JavaScript and install required fixtures automatically
+# when starting runserver. You might want to turn this off on a production
+# server. The default is the opposite of DEBUG
+
+AUTO_SETUP = os.environ.get('AUTO_SETUP', default=False)
+
+# This determines whether the server is used for testing and will let the
+# users know upon signup know that their documents may disappear.
+TEST_SERVER = True
+# This is the contact email that will be shown in various places all over
+# the site.
+CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', default='mail@email.com')
+# If websockets is running on a non-standard port, add it here:
+WS_PORT = False
+
+ADMINS = (
+    (os.environ.get('ADMIN_NAME', default='Your Name'), os.environ.get('ADMIN_EMAIL', default='your_email@example.com')),
+)
+
+# Whether anyone surfing to the site can open an account.
+REGISTRATION_OPEN = os.environ.get('REGISTRATION_OPEN', default=True)
+# Whether anyone registering needs to confirm their email address, set to 'optional' if unwanted, defaults to 'mandatory'.
+ACCOUNT_EMAIL_VERIFICATION = os.environ.get('ACCOUNT_EMAIL_VERIFICATION', default='mandatory')
+
+# This determines whether there is a star labeled "Free" on the login page
+IS_FREE = os.environ.get('IS_FREE', default=False)
+
+MANAGERS = ADMINS
+
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=15)
+
+# Send emails using an SMTP server
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST', default='localhost')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', default='')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', default=25))
+EMAIL_SUBJECT_PREFIX = os.environ.get('EMAIL_SUBJECT_PREFIX', default='[Fidus Writer] ')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', default=False)
+ # For messages to end users
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', default='mail@email.com')
+# For messages to server administrators
+SERVER_EMAIL = os.environ.get('SERVER_EMAIL', default='mail@email.com')
+
+LANGUAGE_CODE = os.environ.get('LANGUAGE_CODE', default='en-us')
+
+ADMIN_SITE_TITLE = os.environ.get('ADMIN_SITE_TITLE', default='Fidus Writer Admin')
+ADMIN_SITE_HEADER = os.environ.get('ADMIN_SITE_HEADER', default='Fidus Writer Administration Site')
+ADMIN_INDEX_TITLE = os.environ.get('ADMIN_INDEX_TITLE', default='Welcome to the Fidus Writer Administration Site')
+
+INSTALLED_APPS = [
+    # If you want to enable one or several of the social network login options
+    # below, make sure you add the authorization keys at:
+    # http://SERVER.COM/admin/socialaccount/socialapp/
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.twitter',
+    # 'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.linkedin',
+    # 'allauth.socialaccount.providers.openid',
+    # 'allauth.socialaccount.providers.soundcloud',
+    # 'allauth.socialaccount.providers.stackexchange',
+    'book',
+    'citation_api_import',
+]
+
+# A list of allowed hostnames of this Fidus Writer installation
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', default='localhost').split()
+
+# Don't share the SECRET_KEY with anyone.
+SECRET_KEY = os.environ.get('SECRET_KEY', default='2ouq2zgw5y-@w+t6!#zf#-z1inigg7$lg3p%8e3kkob1bf$#p4')
