@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.twitter',
     # 'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.gitlab',
     # 'allauth.socialaccount.providers.linkedin',
     # 'allauth.socialaccount.providers.openid',
     # 'allauth.socialaccount.providers.soundcloud',
@@ -94,3 +95,14 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', default='localhost').split()
 
 # Don't share the SECRET_KEY with anyone.
 SECRET_KEY = os.environ.get('SECRET_KEY', default='2ouq2zgw5y-@w+t6!#zf#-z1inigg7$lg3p%8e3kkob1bf$#p4')
+
+# Disable service worker (default is True)
+# USE_SERVICE_WORKER = False
+
+# The maximum size of user uploaded images in bytes. If you use NGINX, note
+# that also it needs to support at least this size.
+MEDIA_MAX_SIZE = False
+
+CSRF_COOKIE_SECURE = True
+JSONPATCH = True
+

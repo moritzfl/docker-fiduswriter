@@ -1,7 +1,7 @@
 # vim: set ts=4 sw=4 sts=0 sta et :
 FROM ubuntu:20.04
 EXPOSE 8000
-ENV VERSION 3.9.19
+ENV VERSION 3.10.16
 
 # Executing group, with fixed group id
 ENV EXECUTING_GROUP fiduswriter
@@ -57,7 +57,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
 RUN pip3 install --upgrade setuptools pip wheel
 RUN pip3 install dj-database-url
 
-RUN pip3 install fiduswriter[books,citation-api-import,languagetool,ojs,phplist,github-export,postgresql]==${VERSION}
+RUN pip3 install fiduswriter[books,citation-api-import,languagetool,ojs,phplist,postgresql]==${VERSION}
 
 RUN mkdir -p /fiduswriter && \
         chown 1000:1000 /fiduswriter && \
@@ -76,3 +76,4 @@ COPY start-fiduswriter.sh /etc/start-fiduswriter.sh
 # Always use the array form for exec, see
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#cmd
 CMD ["/bin/sh", "/etc/start-fiduswriter.sh"]
+

@@ -4,7 +4,7 @@
 [![build](https://img.shields.io/docker/build/moritzf/fiduswriter.svg)](https://hub.docker.com/r/moritzf/fiduswriter/)
 [![pulls](https://img.shields.io/docker/pulls/moritzf/fiduswriter.svg)](https://hub.docker.com/r/moritzf/fiduswriter/)
 
-[FidusWriter](https://github.com/fiduswriter/fiduswriter) is a collaborative online writing tool. This is a docker image that was built following the official installation manual for Ubuntu as closely as possible.
+[FidusWriter](https://github.com/fiduswriter/fiduswriter) is a collaborative online writing tool. This is a docker image that was built following the official installation manual for Ubuntu as closely as possible, and has been upgraded and extended with newer Fidus Writer versions and a Docker Compose example.
 
 ## Builds and Tags on DockerHub
 
@@ -28,7 +28,7 @@ Until you define a mail-server (also through /data/configuration.py), the mails 
 
 In order to persist data, you __must grant write access for the executing user (fiduswriter)__ to the data directory that you want to map to on the host. This can be achieved by issuing the command below. If you do not ensure access to the desired directory on the host, fiduswriter will not run correctly.
 ~~~~
-$ sudo chown -R 999:999 /host/directory
+$ sudo chown -R 1000:1000 /host/directory
 ~~~~
 (Replace "/host/directory" with a valid directory on your host machine)
 
@@ -52,18 +52,28 @@ This repository comes with a `docker-compose.yaml` file. It describes a `product
 
 This will install all build-time dependencies into the image. To configure it for the resulting container, we need to put some configuration in place.
 
-    mkdir -p /data
-    cp env/fiduswriter.env.example env/fiduswriter.env
+    mkdir -p ./data/postgres
+    mkdir -p ./data/fiduswriter
+    chown -R 1000:1000 ./data/fiduswriter
     cp env/postgres.env.example env/postgres.env
+    cp env/fiduswriter.env.example env/fiduswriter.env
     cp env/configuration.py.example data/configuration.py
 
 You will eventually only need to adapt the `*.env` files. The `configuration.py` file differs from the default configuration in so that it reads the configuration from the environment variables specified in the previous files. Please refer to the application documentation, in case these settings are not self-explanatory.
+
+Be sure to change the `SECRET_KEY`:
+
+    docker-compose run --rm app /usr/bin/python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 
 Then you can launch the application with:
 
     docker-compose up -d
 
-One last adaptation is needed after the initial run, since else the registration emails will be sent from `example.com`.
+Make sure to run the application setup everytime you upgrade:
+
+    docker-compose run --rm app fiduswriter setup
+
+One last adaptation is needed after the initial installation, since else the registration emails will be sent from `example.com`.
 
 First create a super user with
 
@@ -76,3 +86,4 @@ This application state needs to be adapted in `/admin/sites/site/`, which is onl
 Change the *domain name* to from where your instance can be reached, and the *display name* to indicate how you want it to be called. Then your Fidus Writer deployment should be complete.
 
 Please leave comments in the issues if you have any remarks.
+
