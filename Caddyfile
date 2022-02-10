@@ -1,6 +1,6 @@
 :80 {
 	root * /app
 	file_server
-	reverse_proxy app:8000
+	reverse_proxy fiduswriter:8000
 }
 

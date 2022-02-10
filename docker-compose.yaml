@@ -5,7 +5,7 @@ services:
     volumes:
     - ./Caddyfile:/etc/caddy/Caddyfile
     - ./static/collected:/app/static
-    networks: ['web']
+    networks: ['web','data']
     depends_on: ['app']
     labels:
 
@@ -33,6 +33,7 @@ services:
     #image: moritzf/fiduswriter:latest
     build: .
     expose: ["8000"]
+    container_name: "fiduswriter"
     env_file: ["./env/fiduswriter.env"]
     volumes:
       - "./data:/data"
@@ -41,7 +42,6 @@ services:
       - "./static/collected:/fiduswriter/static-collected"
     networks:
       - data
-      - web
     depends_on:
       - postgres
     logging:
