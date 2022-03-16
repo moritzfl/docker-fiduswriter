@@ -1,0 +1,68 @@
+version: '2'
+services:
+  static:
+    image: caddy:alpine
+    volumes:
+    - ./Caddyfile:/etc/caddy/Caddyfile
+    - ./static/collected:/app/static
+    networks: ['web','data']
+    depends_on: ['app']
+    labels:
+
+      traefik.enable: true
+
+      traefik.http.routers.com-example-web.entrypoints: web
+      traefik.http.routers.com-example-web.rule: Host(`example.com`)
+      traefik.http.routers.com-example-web.middlewares: http-to-https
+
+      traefik.http.middlewares.http-to-https.redirectscheme.scheme: https
+      traefik.http.middlewares.http-to-https.redirectscheme.permanent: true
+
+      traefik.http.routers.com-example-web-secure.entrypoints: web-secure
+      traefik.http.routers.com-example-web-secure.rule: Host(`example.com`)
+      traefik.http.routers.com-example-web-secure.tls: true
+      traefik.http.routers.com-example-web-secure.tls.certresolver: letsencrypt
+
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+        compress: 'true'
+  app:
+    #image: moritzf/fiduswriter:latest
+    build: .
+    expose: ["8000"]
+    container_name: "fiduswriter"
+    env_file: ["./env/fiduswriter.env"]
+    volumes:
+      - "./data:/data"
+      - "./static/transpile:/fiduswriter/static-transpile"
+      - "./static/libs:/fiduswriter/static-libs"
+      - "./static/collected:/fiduswriter/static-collected"
+    networks:
+      - data
+    depends_on:
+      - postgres
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+        compress: 'true'
+  postgres:
+    image: postgres:12-alpine
+    volumes: ["./data/postgres:/var/lib/postgresql/data"]
+    env_file: ["./env/postgres.env"]
+    networks: ["data"]
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+        compress: 'true'
+networks:
+  data:
+  web:
+    external: true
+
