@@ -1,0 +1,1 @@
+This directory holds the data for the development instance when using the provided run configuration for IntelliJ IDEA.

@@ -1,7 +1,7 @@
 # vim: set ts=4 sw=4 sts=0 sta et :
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 EXPOSE 8000:8000
-ENV VERSION 3.8.4
+ENV VERSION 3.11.9
 
 # Executing group, with fixed group id
 ENV EXECUTING_GROUP fiduswriter
@@ -34,7 +34,7 @@ RUN groupadd \
 # This is one of the best practices of Docker, see
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#apt-get
 RUN apt-get update \
-    && apt-get install -y \
+    && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y \
         build-essential \
         gettext \
         git \
@@ -49,7 +49,7 @@ RUN apt-get update \
         curl \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash
 RUN apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --upgrade setuptools
