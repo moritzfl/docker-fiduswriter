@@ -1,3 +1,7 @@
+# Discontinued
+
+This project is discontinued. Development does continue based on this project at the official [fiduswriter-docker project](https://github.com/fiduswriter/fiduswriter-docker)
+
 # docker-fiduswriter
 
 [![automated](https://img.shields.io/docker/automated/moritzf/fiduswriter.svg)](https://hub.docker.com/r/moritzf/fiduswriter/)
